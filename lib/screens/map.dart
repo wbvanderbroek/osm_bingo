@@ -15,7 +15,6 @@ class OpenStreetMapScreen extends StatefulWidget {
 }
 
 class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
-  final MapController _mapController = MapController();
   Timer? _timer;
   static bool isFirstTime = true;
   final MapService _mapService = MapService();
@@ -91,9 +90,10 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     });
     if (isFirstTime) {
       isFirstTime = false;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _mapController.move(newPosition, _mapController.camera.zoom);
-      });
+      _mapService.mapController.move(
+        newPosition,
+        _mapService.mapController.camera.zoom,
+      );
     }
 
     Atlocation().checkLocation(position.latitude, position.longitude);
