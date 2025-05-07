@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
-import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 
 class MapService {
   static final MapService _instance = MapService._internal();
@@ -13,16 +12,13 @@ class MapService {
   LatLng currentPosition = const LatLng(53.2194, 6.5665);
   final List<Marker> bingoMarkers = [];
 
-  List<BingoElement> get _flattenedBingoElements =>
-      BingoCard.bingoCard.expand((row) => row).toList();
-
   MapService._internal() {
     _populateMarkers();
   }
 
   void _populateMarkers() {
     bingoMarkers.clear();
-    for (var element in _flattenedBingoElements) {
+    for (var element in BingoCard.flattenedBingoElements) {
       final marker = Marker(
         point: LatLng(element.latitude, element.longitude),
         width: 40,

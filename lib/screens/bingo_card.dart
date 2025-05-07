@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
-import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 
 class BingoCardScreen extends StatefulWidget {
   const BingoCardScreen({super.key});
@@ -10,12 +9,9 @@ class BingoCardScreen extends StatefulWidget {
 }
 
 class _BingoCardScreenState extends State<BingoCardScreen> {
-  late final List<BingoElement> _flattenedBingoElements;
-
   @override
   void initState() {
     super.initState();
-    _flattenedBingoElements = BingoCard.bingoCard.expand((row) => row).toList();
   }
 
   @override
@@ -35,7 +31,7 @@ class _BingoCardScreenState extends State<BingoCardScreen> {
               padding: EdgeInsets.zero,
               childAspectRatio: 1,
               children: List.generate(25, (index) {
-                final element = _flattenedBingoElements[index];
+                final element = BingoCard.flattenedBingoElements[index];
                 return Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(

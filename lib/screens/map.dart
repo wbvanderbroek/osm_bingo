@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:osm_bingo/bingo_logic/bingo_element.dart';
+import 'package:osm_bingo/in_range_checker.dart';
 import 'package:osm_bingo/map_service.dart';
 
 class OpenStreetMapScreen extends StatefulWidget {
@@ -15,15 +15,8 @@ class OpenStreetMapScreen extends StatefulWidget {
 }
 
 class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
-  final MapController _mapController = MapController();
-  static LatLng _currentPosition = LatLng(
-    53.2194,
-    6.5665,
-  ); // Default to Groningen
   Timer? _timer;
   static bool isFirstTime = true;
-  late final List<BingoElement> _flattenedBingoElements;
-  List<Marker> _bingoMarkers = [];
   final MapService _mapService = MapService();
 
   @override
@@ -63,19 +56,6 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     super.dispose();
   }
 
-  _populateMap() {
-    for (var element in _flattenedBingoElements) {
-      final marker = Marker(
-        point: LatLng(element.latitude, element.longitude),
-        width: 40,
-        height: 40,
-        child: const Icon(Icons.location_pin, color: Colors.white, size: 30),
-      );
-      _bingoMarkers.add(marker);
-    }
-    setState(() {});
-  }
-
   Future<void> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -106,12 +86,17 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     if (!mounted) return;
 
     setState(() {
-      _currentPosition = newPosition;
+      _mapService.currentPosition = newPosition;
     });
     if (isFirstTime) {
       isFirstTime = false;
-      _mapController.move(newPosition, _mapController.camera.zoom);
+      _mapService.mapController.move(
+        newPosition,
+        _mapService.mapController.camera.zoom,
+      );
     }
+
+    InRangeChecker().checkLocation(position.latitude, position.longitude);
   }
 
   @override
@@ -119,7 +104,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Current Location: ${_currentPosition.latitude}, ${_currentPosition.longitude}',
+          'Current Location: ${_mapService.currentPosition.latitude}, ${_mapService.currentPosition.longitude}',
         ),
       ),
       body: FlutterMap(
@@ -127,6 +112,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
         options: MapOptions(
           initialCenter: _mapService.currentPosition,
           initialZoom: 13,
+          minZoom: 3,
         ),
         children: [
           TileLayer(
