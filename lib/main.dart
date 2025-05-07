@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:osm_bingo/cam.dart';
 import 'package:osm_bingo/map.dart';
 
 void main() {
+  openCamera();
   runApp(const MyApp());
 }
 
