@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:osm_bingo/custom_navigation_bar.dart';
+import 'package:osm_bingo/dao/bingo.dart';
+import 'package:osm_bingo/dao/local_database.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalDatabase().init();
+
+  await BingoDao().getCompleted();
+
   runApp(const MyApp());
 }
 
