@@ -78,4 +78,29 @@ class BingoCard {
       BingoElement("Boteringebrug", 53.22132573050829, 6.562735226033523),
     ],
   ];
+
+  bool HasBingo() {
+    for (int x = 0; x < 5; x++) {
+      List<bool> xAxis = [false, false, false, false, false];
+      List<bool> yAxis = [false, false, false, false, false];
+      List<bool> diagonalOne = [false, false, false, false, false];
+      List<bool> diagonalTwo = [false, false, false, false, false];
+
+      diagonalOne[x] = bingoCard[x][x].hasCompleted;
+      diagonalTwo[x] = bingoCard[4 - x][x].hasCompleted;
+
+      if (!diagonalOne.contains(false)) return true;
+      if (!diagonalTwo.contains(false)) return true;
+
+      for (int y = 0; y < 5; y++) {
+        yAxis[y] = bingoCard[x][y].hasCompleted;
+        xAxis[y] = bingoCard[y][x].hasCompleted;
+
+        if (!yAxis.contains(false)) return true;
+        if (!xAxis.contains(false)) return true;
+      }
+    }
+
+    return false;
+  }
 }
