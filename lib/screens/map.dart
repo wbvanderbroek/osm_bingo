@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:osm_bingo/bingo_logic/bingo_card.dart';
 import 'package:osm_bingo/bingo_logic/bingo_element.dart';
+import 'package:osm_bingo/map_service.dart';
 
 class OpenStreetMapScreen extends StatefulWidget {
   const OpenStreetMapScreen({super.key});
@@ -24,15 +24,12 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   static bool isFirstTime = true;
   late final List<BingoElement> _flattenedBingoElements;
   List<Marker> _bingoMarkers = [];
+  final MapService _mapService = MapService();
 
   @override
   void initState() {
     super.initState();
     _determinePosition();
-
-    _flattenedBingoElements = BingoCard.bingoCard.expand((row) => row).toList();
-
-    _populateMap();
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
       _determinePosition();
     });
@@ -72,7 +69,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
         point: LatLng(element.latitude, element.longitude),
         width: 40,
         height: 40,
-        child: const Icon(Icons.location_pin, color: Colors.blue, size: 30),
+        child: const Icon(Icons.location_pin, color: Colors.white, size: 30),
       );
       _bingoMarkers.add(marker);
     }
@@ -126,8 +123,11 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
         ),
       ),
       body: FlutterMap(
-        mapController: _mapController,
-        options: MapOptions(initialCenter: _currentPosition, initialZoom: 13),
+        mapController: _mapService.mapController,
+        options: MapOptions(
+          initialCenter: _mapService.currentPosition,
+          initialZoom: 13,
+        ),
         children: [
           TileLayer(
             urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -135,17 +135,17 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
           ),
           MarkerLayer(
             markers: [
-              ..._bingoMarkers,
+              ..._mapService.bingoMarkers,
               Marker(
-                point: _currentPosition,
+                point: _mapService.currentPosition,
                 width: 40,
                 height: 40,
                 child: const Icon(
-                  Icons.location_pin,
+                  Icons.accessibility_new_outlined,
                   color: Colors.red,
-                  size: 30,
+                  size: 45,
                 ),
-              ), // TODO: Test marker, need to remove later
+              ),
             ],
           ),
         ],
