@@ -80,11 +80,12 @@ class BingoCard {
   ];
 
   bool HasBingo() {
+    List<bool> diagonalOne = [false, false, false, false, false];
+    List<bool> diagonalTwo = [false, false, false, false, false];
+
     for (int x = 0; x < 5; x++) {
       List<bool> xAxis = [false, false, false, false, false];
       List<bool> yAxis = [false, false, false, false, false];
-      List<bool> diagonalOne = [false, false, false, false, false];
-      List<bool> diagonalTwo = [false, false, false, false, false];
 
       diagonalOne[x] = bingoCard[x][x].hasCompleted;
       diagonalTwo[x] = bingoCard[4 - x][x].hasCompleted;
