@@ -63,6 +63,8 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     final Position position = await Geolocator.getCurrentPosition();
     final newPosition = LatLng(position.latitude, position.longitude);
 
+    if (!mounted) return;
+
     setState(() {
       _currentPosition = newPosition;
     });
