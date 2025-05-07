@@ -50,7 +50,10 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
         ),
       ),
       body:
-          <Widget>[const OpenStreetMap(), const BingoCard()][currentPageIndex],
+          <Widget>[
+            const OpenStreetMapScreen(),
+            const BingoCardScreen(),
+          ][currentPageIndex],
     );
   }
 }

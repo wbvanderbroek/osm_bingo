@@ -5,20 +5,21 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-class OpenStreetMap extends StatefulWidget {
-  const OpenStreetMap({super.key});
+class OpenStreetMapScreen extends StatefulWidget {
+  const OpenStreetMapScreen({super.key});
 
   @override
-  State<OpenStreetMap> createState() => _OpenStreetMapState();
+  State<OpenStreetMapScreen> createState() => _OpenStreetMapScreenState();
 }
 
-class _OpenStreetMapState extends State<OpenStreetMap> {
+class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   final MapController _mapController = MapController();
   static LatLng _currentPosition = LatLng(
     53.2194,
     6.5665,
   ); // Default to Groningen
   Timer? _timer;
+  static bool isFirstTime = true;
 
   @override
   void initState() {
@@ -26,7 +27,6 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     _determinePosition();
 
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
-      print('Timer triggered');
       _determinePosition();
     });
   }
@@ -64,13 +64,15 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     final Position position = await Geolocator.getCurrentPosition();
     final newPosition = LatLng(position.latitude, position.longitude);
 
+    if (!mounted) return;
+
     setState(() {
       _currentPosition = newPosition;
     });
-
-    _mapController.move(newPosition, _mapController.camera.zoom);
-
-    print('Current location: $newPosition');
+    if (isFirstTime) {
+      isFirstTime = false;
+      _mapController.move(newPosition, _mapController.camera.zoom);
+    }
   }
 
   @override
@@ -86,8 +88,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
         options: MapOptions(initialCenter: _currentPosition, initialZoom: 13),
         children: [
           TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: const ['a', 'b', 'c'],
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             userAgentPackageName: 'com.example',
           ),
           MarkerLayer(
@@ -99,7 +100,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
                 child: const Icon(
                   Icons.location_pin,
                   color: Colors.red,
-                  size: 40,
+                  size: 30,
                 ),
               ), // TODO: Test marker, need to remove later
             ],
