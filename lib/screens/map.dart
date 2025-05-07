@@ -6,8 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 class OpenStreetMap extends StatefulWidget {
-  const OpenStreetMap({super.key, required this.title});
-  final String title;
+  const OpenStreetMap({super.key});
 
   @override
   State<OpenStreetMap> createState() => _OpenStreetMapState();
@@ -15,7 +14,10 @@ class OpenStreetMap extends StatefulWidget {
 
 class _OpenStreetMapState extends State<OpenStreetMap> {
   final MapController _mapController = MapController();
-  LatLng _currentPosition = LatLng(53.2194, 6.5665); // Default to Groningen
+  static LatLng _currentPosition = LatLng(
+    53.2194,
+    6.5665,
+  ); // Default to Groningen
   Timer? _timer;
 
   @override
@@ -74,7 +76,11 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+        title: Text(
+          'Current Location: ${_currentPosition.latitude}, ${_currentPosition.longitude}',
+        ),
+      ),
       body: FlutterMap(
         mapController: _mapController,
         options: MapOptions(initialCenter: _currentPosition, initialZoom: 13),

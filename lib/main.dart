@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:osm_bingo/map.dart';
+import 'package:osm_bingo/custom_navigation_bar.dart';
+import 'package:osm_bingo/screens/map.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const OpenStreetMap(title: 'Flutter Map Location'),
+      home: const CustomNavigationBar(),
     );
   }
 }
