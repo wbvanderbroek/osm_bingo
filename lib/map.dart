@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,11 +16,23 @@ class OpenStreetMap extends StatefulWidget {
 class _OpenStreetMapState extends State<OpenStreetMap> {
   final MapController _mapController = MapController();
   LatLng _currentPosition = LatLng(53.2194, 6.5665); // Default to Groningen
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     _determinePosition();
+
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
+      print('Timer triggered');
+      _determinePosition();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   Future<void> _determinePosition() async {
