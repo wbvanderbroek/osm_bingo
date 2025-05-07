@@ -5,6 +5,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../at-location/AtLocation.dart';
+
 class OpenStreetMap extends StatefulWidget {
   const OpenStreetMap({super.key});
 
@@ -69,7 +71,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     });
 
     _mapController.move(newPosition, _mapController.camera.zoom);
-
+    Atlocation().checkLocation(position.latitude, position.longitude);
     print('Current location: $newPosition');
   }
 
