@@ -19,6 +19,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     6.5665,
   ); // Default to Groningen
   Timer? _timer;
+  static bool isFirstTime = true;
 
   @override
   void initState() {
@@ -68,8 +69,10 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     setState(() {
       _currentPosition = newPosition;
     });
-
-    _mapController.move(newPosition, _mapController.camera.zoom);
+    if (isFirstTime) {
+      isFirstTime = false;
+      _mapController.move(newPosition, _mapController.camera.zoom);
+    }
   }
 
   @override
