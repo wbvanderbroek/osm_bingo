@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:osm_bingo/dao/bingo.dart';
 import 'package:osm_bingo/map_service.dart';
 
 import 'bingo_element.dart';
@@ -93,6 +94,7 @@ class BingoCard {
         if (element.latitude == latitude && element.longitude == longitude) {
           element.hasCompleted = true;
           debugPrint('has a bingo of any kind yes/no: ${hasBingo()}');
+          BingoDao().insertCompleted(x, y);
           MapService().refreshMarkers();
           return;
         }
