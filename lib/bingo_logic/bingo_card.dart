@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
+
 import 'bingo_element.dart';
 
 class BingoCard {
-  List<List<BingoElement>> bingoCard = [
+  static List<List<BingoElement>> bingoCard = [
     [
       BingoElement("Het Kasteel", 53.21774270053335, 6.555017571423083),
       BingoElement("Forum Groningen", 53.21893636399295, 6.570391954630532),
@@ -79,7 +81,21 @@ class BingoCard {
     ],
   ];
 
-  bool HasBingo() {
+  static void markAsCompleted(double latitude, double longitude) {
+    for (int x = 0; x < bingoCard.length; x++) {
+      for (int y = 0; y < bingoCard[x].length; y++) {
+        final element = bingoCard[x][y];
+
+        if (element.latitude == latitude && element.longitude == longitude) {
+          element.hasCompleted = true;
+          debugPrint('has a bingo of any kind yes/no: ${hasBingo()}');
+          return;
+        }
+      }
+    }
+  }
+
+  static bool hasBingo() {
     List<bool> diagonalOne = [false, false, false, false, false];
     List<bool> diagonalTwo = [false, false, false, false, false];
 

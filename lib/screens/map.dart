@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -29,13 +30,34 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     super.initState();
     _determinePosition();
 
-    final bingoCard = BingoCard();
-    _flattenedBingoElements = bingoCard.bingoCard.expand((row) => row).toList();
+    _flattenedBingoElements = BingoCard.bingoCard.expand((row) => row).toList();
 
     _populateMap();
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
       _determinePosition();
     });
+
+    // These lines can ben used to test bing checks or visualization
+    // BingoCard.markAsCompleted(
+    //   BingoCard.bingoCard[0][0].latitude,
+    //   BingoCard.bingoCard[0][0].longitude,
+    // );
+    // BingoCard.markAsCompleted(
+    //   BingoCard.bingoCard[0][1].latitude,
+    //   BingoCard.bingoCard[0][1].longitude,
+    // );
+    // BingoCard.markAsCompleted(
+    //   BingoCard.bingoCard[0][2].latitude,
+    //   BingoCard.bingoCard[0][2].longitude,
+    // );
+    // BingoCard.markAsCompleted(
+    //   BingoCard.bingoCard[0][3].latitude,
+    //   BingoCard.bingoCard[0][3].longitude,
+    // );
+    // BingoCard.markAsCompleted(
+    //   BingoCard.bingoCard[0][4].latitude,
+    //   BingoCard.bingoCard[0][4].longitude,
+    // );
   }
 
   @override
