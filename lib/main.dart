@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:osm_bingo/at-location/AtLocation.dart';
 import 'package:osm_bingo/custom_navigation_bar.dart';
 
 void main() {

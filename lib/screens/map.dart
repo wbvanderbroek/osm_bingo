@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:osm_bingo/at-location/AtLocation.dart';
+import 'package:osm_bingo/bingo_logic/bingo_card.dart';
 import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 import 'package:osm_bingo/map_service.dart';
 
-import '../at-location/AtLocation.dart';
-
-class OpenStreetMap extends StatefulWidget {
-  const OpenStreetMap({super.key});
+class OpenStreetMapScreen extends StatefulWidget {
+  const OpenStreetMapScreen({super.key});
 
   @override
   State<OpenStreetMapScreen> createState() => _OpenStreetMapScreenState();
