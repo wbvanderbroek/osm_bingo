@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
+import 'package:osm_bingo/map_service.dart';
+
 import 'bingo_element.dart';
 
 class BingoCard {
-  List<List<BingoElement>> bingoCard = [
+  static List<List<BingoElement>> bingoCard = [
     [
       BingoElement("Het Kasteel", 53.21774270053335, 6.555017571423083),
       BingoElement("Forum Groningen", 53.21893636399295, 6.570391954630532),
@@ -78,4 +81,45 @@ class BingoCard {
       BingoElement("Boteringebrug", 53.22132573050829, 6.562735226033523),
     ],
   ];
+
+  static void markAsCompleted(double latitude, double longitude) {
+    for (int x = 0; x < bingoCard.length; x++) {
+      for (int y = 0; y < bingoCard[x].length; y++) {
+        final element = bingoCard[x][y];
+
+        if (element.latitude == latitude && element.longitude == longitude) {
+          element.hasCompleted = true;
+          debugPrint('has a bingo of any kind yes/no: ${hasBingo()}');
+          MapService().refreshMarkers();
+          return;
+        }
+      }
+    }
+  }
+
+  static bool hasBingo() {
+    List<bool> diagonalOne = [false, false, false, false, false];
+    List<bool> diagonalTwo = [false, false, false, false, false];
+
+    for (int x = 0; x < 5; x++) {
+      List<bool> xAxis = [false, false, false, false, false];
+      List<bool> yAxis = [false, false, false, false, false];
+
+      for (int y = 0; y < 5; y++) {
+        xAxis[y] = bingoCard[x][y].hasCompleted;
+        yAxis[y] = bingoCard[y][x].hasCompleted;
+      }
+
+      if (!xAxis.contains(false)) return true;
+      if (!yAxis.contains(false)) return true;
+
+      diagonalOne[x] = bingoCard[x][x].hasCompleted;
+      diagonalTwo[x] = bingoCard[x][4 - x].hasCompleted;
+    }
+
+    if (!diagonalOne.contains(false)) return true;
+    if (!diagonalTwo.contains(false)) return true;
+
+    return false;
+  }
 }
