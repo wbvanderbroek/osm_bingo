@@ -6,8 +6,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
 import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 
-class OpenStreetMapScreen extends StatefulWidget {
-  const OpenStreetMapScreen({super.key});
+import '../at-location/AtLocation.dart';
+
+class OpenStreetMap extends StatefulWidget {
+  const OpenStreetMap({super.key});
 
   @override
   State<OpenStreetMapScreen> createState() => _OpenStreetMapScreenState();
@@ -93,6 +95,8 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
       isFirstTime = false;
       _mapController.move(newPosition, _mapController.camera.zoom);
     }
+
+    Atlocation().checkLocation(position.latitude, position.longitude);
   }
 
   @override
