@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:osm_bingo/custom_navigation_bar.dart';
-import 'package:osm_bingo/screens/map.dart';
 
 void main() {
   runApp(const MyApp());
