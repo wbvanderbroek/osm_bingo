@@ -1,29 +1,30 @@
 import 'dart:math';
+
+import 'package:osm_bingo/bingo_logic/bingo_card.dart';
 import 'package:vibration/vibration.dart';
 
-List<double> positionsLat = [53.211034524286035, 53.2033246558365];
-List<double> positionsLon = [6.564051943997352, 6.562639551423343];
-List<String> positionsName = ["Station", "School"];
 bool hasVibraded = false;
 bool hasVibratedLoopEnd = false; // Checks if hasVibrated has ever become true.
 
 class Atlocation {
-  void checkLocation(final lat, final lon) {
+  void checkLocation(final userLat, final userLon) {
+    print("Checking location");
     bool neverTrue = false; // Checks if hasVibrated has never becomes false;
-    for (int i = 0; i < positionsLat.length; i++) {
+    for (var element in BingoCard.flattenedBingoElements) {
       double distanceInMeters = calculateDistance(
-        positionsLat[i],
-        positionsLon[i],
-        lat,
-        lon,
+        element.latitude,
+        element.longitude,
+        userLat,
+        userLon,
       );
       if (distanceInMeters <= 20) {
-        print(
-          "You're close to ${positionsName[i]} by ${distanceInMeters.toInt()} meters",
-        );
+        print("you are close");
+
         neverTrue = true; // Has vibrated becomes false so this becomes true.
         if (hasVibraded == false) {
+          BingoCard.markAsCompleted(element.latitude, element.longitude);
           Vibration.vibrate();
+          print("vibrated");
           hasVibraded = true;
           hasVibratedLoopEnd = true;
         }

@@ -82,6 +82,9 @@ class BingoCard {
     ],
   ];
 
+  static List<BingoElement> get flattenedBingoElements =>
+      BingoCard.bingoCard.expand((row) => row).toList();
+
   static void markAsCompleted(double latitude, double longitude) {
     for (int x = 0; x < bingoCard.length; x++) {
       for (int y = 0; y < bingoCard[x].length; y++) {
