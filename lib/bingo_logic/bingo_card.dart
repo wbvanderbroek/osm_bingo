@@ -87,20 +87,20 @@ class BingoCard {
       List<bool> xAxis = [false, false, false, false, false];
       List<bool> yAxis = [false, false, false, false, false];
 
-      diagonalOne[x] = bingoCard[x][x].hasCompleted;
-      diagonalTwo[x] = bingoCard[4 - x][x].hasCompleted;
-
-      if (!diagonalOne.contains(false)) return true;
-      if (!diagonalTwo.contains(false)) return true;
-
       for (int y = 0; y < 5; y++) {
-        yAxis[y] = bingoCard[x][y].hasCompleted;
-        xAxis[y] = bingoCard[y][x].hasCompleted;
-
-        if (!yAxis.contains(false)) return true;
-        if (!xAxis.contains(false)) return true;
+        xAxis[y] = bingoCard[x][y].hasCompleted;
+        yAxis[y] = bingoCard[y][x].hasCompleted;
       }
+
+      if (!xAxis.contains(false)) return true;
+      if (!yAxis.contains(false)) return true;
+
+      diagonalOne[x] = bingoCard[x][x].hasCompleted;
+      diagonalTwo[x] = bingoCard[x][4 - x].hasCompleted;
     }
+
+    if (!diagonalOne.contains(false)) return true;
+    if (!diagonalTwo.contains(false)) return true;
 
     return false;
   }
