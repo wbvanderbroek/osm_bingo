@@ -112,6 +112,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
         options: MapOptions(
           initialCenter: _mapService.currentPosition,
           initialZoom: 13,
+          minZoom: 3,
         ),
         children: [
           TileLayer(
