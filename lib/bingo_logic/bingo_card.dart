@@ -7,18 +7,22 @@ class BingoCard {
       BingoElement("Forum Groningen", 53.21893636399295, 6.570391954630532),
       BingoElement("Martinitoren", 53.21938568974004, 6.568207623222464),
       BingoElement("Nieuwe Kerk", 53.223280467862814, 6.561681503979227),
-      BingoElement("Groningen Museum", 53.21228190017462, 6.566079351512879),
+      BingoElement("Groninger Museum", 53.21228190017462, 6.566079351512879),
     ],
     [
-      BingoElement("AKerk", 53.216492401093994, 6.562364669840671),
-      BingoElement("Groningen Station", 53.211020494728324, 6.564063342704337),
+      BingoElement("Akerk", 53.216492401093994, 6.562364669840671),
+      BingoElement("Station Groningen", 53.211020494728324, 6.564063342704337),
       BingoElement("MartiniPlaza", 53.20303240513857, 6.555081707361252),
       BingoElement(
-        "Noorderpoort Kunst & media",
+        "Noorderpoort Kunst & Multimedia",
         53.207594630285534,
         6.557172995605856,
       ),
-      BingoElement("Kinderboedrij stads", 53.20606466399597, 6.547321014823603),
+      BingoElement(
+        "Kinderboerderij Stadspark",
+        53.20606466399597,
+        6.547321014823603,
+      ),
     ],
     [
       BingoElement(
@@ -47,7 +51,7 @@ class BingoCard {
         6.557473848143307,
       ),
       BingoElement(
-        "McDonald's Herenstraat",
+        "McDonald's Herestraat",
         53.21652939251069,
         6.567871745345571,
       ),
@@ -61,7 +65,7 @@ class BingoCard {
     [
       BingoElement("Prinsentuin", 53.2213457069883, 6.568897712273988),
       BingoElement(
-        "Voormalig Drafbaan Stadspark",
+        "Voormalige Draftbaan Stadspark",
         53.20349208509578,
         6.5491170434165795,
       ),
