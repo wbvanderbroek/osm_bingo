@@ -26,7 +26,6 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     _determinePosition();
 
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
-      print('Timer triggered');
       _determinePosition();
     });
   }
@@ -69,8 +68,6 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
     });
 
     _mapController.move(newPosition, _mapController.camera.zoom);
-
-    print('Current location: $newPosition');
   }
 
   @override
@@ -86,8 +83,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
         options: MapOptions(initialCenter: _currentPosition, initialZoom: 13),
         children: [
           TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: const ['a', 'b', 'c'],
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             userAgentPackageName: 'com.example',
           ),
           MarkerLayer(
@@ -99,7 +95,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
                 child: const Icon(
                   Icons.location_pin,
                   color: Colors.red,
-                  size: 40,
+                  size: 30,
                 ),
               ), // TODO: Test marker, need to remove later
             ],
