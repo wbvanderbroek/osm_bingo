@@ -14,7 +14,10 @@ class OpenStreetMap extends StatefulWidget {
 
 class _OpenStreetMapState extends State<OpenStreetMap> {
   final MapController _mapController = MapController();
-  LatLng _currentPosition = LatLng(53.2194, 6.5665); // Default to Groningen
+  static LatLng _currentPosition = LatLng(
+    53.2194,
+    6.5665,
+  ); // Default to Groningen
   Timer? _timer;
 
   @override
