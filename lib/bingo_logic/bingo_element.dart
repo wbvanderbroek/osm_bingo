@@ -9,10 +9,4 @@ class BingoElement {
     longitude = long;
     latitude = lat;
   }
-
-  void changeBool(bool value) {
-    hasCompleted = value;
-  }
-
-  bool getBool() => hasCompleted;
 }
