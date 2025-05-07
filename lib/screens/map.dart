@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:osm_bingo/at-location/AtLocation.dart';
+import 'package:osm_bingo/in_range_checker.dart';
 import 'package:osm_bingo/map_service.dart';
 
 class OpenStreetMapScreen extends StatefulWidget {
@@ -96,7 +96,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
       );
     }
 
-    Atlocation().checkLocation(position.latitude, position.longitude);
+    InRangeChecker().checkLocation(position.latitude, position.longitude);
   }
 
   @override
