@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BingoCard extends StatefulWidget {
-  const BingoCard({super.key});
+class BingoCardScreen extends StatefulWidget {
+  const BingoCardScreen({super.key});
 
   @override
-  State<BingoCard> createState() => _BingoCardState();
+  State<BingoCardScreen> createState() => _BingoCardScreenState();
 }
 
-class _BingoCardState extends State<BingoCard> {
+class _BingoCardScreenState extends State<BingoCardScreen> {
   @override
   Widget build(BuildContext context) {
     const title = 'Bingo Kaart';

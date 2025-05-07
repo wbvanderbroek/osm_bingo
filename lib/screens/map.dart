@@ -5,14 +5,14 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-class OpenStreetMap extends StatefulWidget {
-  const OpenStreetMap({super.key});
+class OpenStreetMapScreen extends StatefulWidget {
+  const OpenStreetMapScreen({super.key});
 
   @override
-  State<OpenStreetMap> createState() => _OpenStreetMapState();
+  State<OpenStreetMapScreen> createState() => _OpenStreetMapScreenState();
 }
 
-class _OpenStreetMapState extends State<OpenStreetMap> {
+class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   final MapController _mapController = MapController();
   static LatLng _currentPosition = LatLng(
     53.2194,
