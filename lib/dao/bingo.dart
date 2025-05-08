@@ -1,4 +1,5 @@
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
+import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 import 'package:osm_bingo/dao/local_database.dart';
 
 List<String> bingoTableDeclaration = [
@@ -32,7 +33,8 @@ class BingoDao {
         int gridLocationX = int.parse(parts[0]);
         int gridLocationY = int.parse(parts[1]);
 
-        BingoCard.bingoCard[gridLocationX][gridLocationY].hasCompleted = true;
+        BingoCard.bingoCard[gridLocationX][gridLocationY].locationStatus =
+            LocationStatus.completed;
       }
       return;
     }
