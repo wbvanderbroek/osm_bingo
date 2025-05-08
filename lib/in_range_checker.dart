@@ -7,7 +7,6 @@ import 'package:vibration/vibration.dart';
 
 class InRangeChecker {
   void checkLocation(final userLat, final userLon) {
-    debugPrint("Checking location");
     for (var element in BingoCard.flattenedBingoElements) {
       double distanceInMeters = calculateDistance(
         element.latitude,
@@ -15,7 +14,7 @@ class InRangeChecker {
         userLat,
         userLon,
       );
-      if (distanceInMeters <= MapService.range) {
+      if (distanceInMeters <= MapService().calculatedRange) {
         if (element.hasCompleted == false) {
           BingoCard.markAsCompleted(element.latitude, element.longitude);
           Vibration.vibrate();

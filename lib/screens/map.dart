@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:osm_bingo/in_range_checker.dart';
 import 'package:osm_bingo/map_service.dart';
 
 class OpenStreetMapScreen extends StatefulWidget {
@@ -16,15 +13,18 @@ class OpenStreetMapScreen extends StatefulWidget {
 
 class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   Timer? _timer;
-  static bool isFirstTime = true;
   final MapService _mapService = MapService();
 
   @override
   void initState() {
     super.initState();
-    _determinePosition();
+    _mapService.determinePosition();
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
-      _determinePosition();
+      _mapService.determinePosition();
+    });
+
+    _mapService.addListener(() {
+      setState(() {});
     });
 
     // These lines can ben used to test bing checks or visualization
@@ -54,49 +54,9 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   void dispose() {
     _timer?.cancel();
     super.dispose();
-  }
-
-  Future<void> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      debugPrint('Location services are disabled.');
-      return;
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        debugPrint('Location permissions are denied');
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      debugPrint('Location permissions are permanently denied.');
-      return;
-    }
-
-    final Position position = await Geolocator.getCurrentPosition();
-    final newPosition = LatLng(position.latitude, position.longitude);
-
-    if (!mounted) return;
-
-    setState(() {
-      _mapService.currentPosition = newPosition;
+    _mapService.removeListener(() {
+      setState(() {});
     });
-    if (isFirstTime) {
-      isFirstTime = false;
-      _mapService.mapController.move(
-        newPosition,
-        _mapService.mapController.camera.zoom,
-      );
-    }
-
-    InRangeChecker().checkLocation(position.latitude, position.longitude);
   }
 
   @override
@@ -126,7 +86,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
                 color: Colors.blue.withAlpha(20),
                 borderStrokeWidth: 2,
                 useRadiusInMeter: true,
-                radius: MapService.range.toDouble(), // in meters
+                radius: MapService().calculatedRange.toDouble(), // in meters
                 borderColor: Colors.blue,
               ),
             ],
