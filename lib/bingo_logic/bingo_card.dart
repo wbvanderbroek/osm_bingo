@@ -9,13 +9,13 @@ class BingoCard {
     [
       BingoElement(
         "Het Kasteel",
-        "Maak een foto van het Kasteel met jouw groep.",
+        "Maak een foto van het Kasteel met je groepje.",
         53.21774270053335,
         6.555017571423083,
       ),
       BingoElement(
         "Forum Groningen",
-        "Maak een selfie/foto op het dak van het Forum met je groep.",
+        "Maak een selfie/foto op het dak van het Forum met je groepje.",
         53.21893636399295,
         6.570391954630532,
       ),
@@ -33,7 +33,7 @@ class BingoCard {
       ),
       BingoElement(
         "Groninger Museum",
-        "Maak een foto van het Groninger Museum waarin een of merderen leden van jouw groepje een kunst werk na doen, geef ook aan welk kunst werk je na doet het hoefd niet van dit museum te zijn.",
+        "Maak een foto van het Groninger Museum waarin een of merderen leden van je groepje een kunst werk na doen, geef ook aan welk kunst werk je na doet het hoefd niet van dit museum te zijn.",
         53.21228190017462,
         6.566079351512879,
       ),
@@ -47,7 +47,7 @@ class BingoCard {
       ),
       BingoElement(
         "Station Groningen",
-        "Maak een foto bij het paarden standbeeld bij het stations-gebouw.",
+        "Maak een foto bij het paarden standbeeld bij het stations gebouw.",
         53.211020494728324,
         6.564063342704337,
       ),
@@ -59,7 +59,7 @@ class BingoCard {
       ),
       BingoElement(
         "Noorderpoort Kunst & Multimedia",
-        "Maak een foto van je groep met het Noorderpoort logo.",
+        "Maak een foto van je groepje met het Noorderpoort logo.",
         53.207594630285534,
         6.557172995605856,
       ),
@@ -129,7 +129,7 @@ class BingoCard {
       ),
       BingoElement(
         "KFC Westerkade",
-        "Maak een foto met van iemand in je groep met Colonel Sanders.",
+        "Maak een foto met van iemand in je groepje met Colonel Sanders.",
         53.21524576553252,
         6.557393169762863,
       ),
@@ -137,13 +137,13 @@ class BingoCard {
     [
       BingoElement(
         "Prinsentuin",
-        "Maak een foto met je groep in de prinsjes tuin.",
+        "Maak een foto met je groepje in de prinsjes tuin.",
         53.2213457069883,
         6.568897712273988,
       ),
       BingoElement(
         "Voormalige Draftbaan Stadspark",
-        "Maak een foto van de drafbaan met je groep.",
+        "Maak een foto van de drafbaan met je groepje.",
         53.20349208509578,
         6.5491170434165795,
       ),
@@ -155,7 +155,7 @@ class BingoCard {
       ),
       BingoElement(
         "'t Pannekoekschip",
-        "Maak een foto van ‘t Pannekoek-schip met iemand van je groep.",
+        "Maak een foto van ‘t Pannekoek-schip met iemand van je groepje.",
         53.21695900180443,
         6.579041728818073,
       ),
