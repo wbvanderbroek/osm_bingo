@@ -77,6 +77,20 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
             ],
           ),
           MarkerLayer(
+            markers: [
+              Marker(
+                width: 40,
+                height: 40,
+                point: _mapService.currentPosition,
+                child: const Icon(
+                  Icons.person_pin_circle,
+                  color: Colors.red,
+                  size: 30,
+                ),
+              ),
+            ],
+          ),
+          MarkerLayer(
             markers:
                 _mapService.bingoMarkers.map((marker) {
                   return Marker(
