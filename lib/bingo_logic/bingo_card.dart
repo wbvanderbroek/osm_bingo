@@ -205,8 +205,8 @@ class BingoCard {
                 (context) => PopScope(
                   canPop: false,
                   child: QuestPopup(
-                    text: 'Test text!',
-                    buttonText: 'Foto nemen',
+                    text: element.taskDescription,
+                    buttonText: 'Foto maken!',
                     onButtonPressed: () {
                       Navigator.of(context).pop();
                       navigationIndexNotifier.value = 2;

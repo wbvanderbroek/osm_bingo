@@ -15,18 +15,13 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBar extends State<CustomNavigationBar> {
-  int currentPageIndex = 0;
-
   @override
   void initState() {
     super.initState();
-    currentPageIndex = widget.initialIndex;
 
     navigationIndexNotifier.addListener(() {
       if (mounted) {
-        setState(() {
-          currentPageIndex = navigationIndexNotifier.value;
-        });
+        setState(() {});
       }
     });
   }
@@ -42,12 +37,12 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             NavigationBar(
               onDestinationSelected: (int index) {
                 setState(() {
-                  currentPageIndex = index;
+                  navigationIndexNotifier.value = index;
                 });
               },
               indicatorColor: Colors.amber,
               backgroundColor: Colors.white70,
-              selectedIndex: currentPageIndex,
+              selectedIndex: navigationIndexNotifier.value,
               destinations: const <Widget>[
                 NavigationDestination(icon: Icon(Icons.map), label: 'Map'),
                 NavigationDestination(
@@ -68,7 +63,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             const OpenStreetMapScreen(),
             const BingoCardScreen(),
             const TakePictureScreen(),
-          ][currentPageIndex],
+          ][navigationIndexNotifier.value],
     );
   }
 }

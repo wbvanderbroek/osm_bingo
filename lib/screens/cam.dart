@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -22,19 +22,25 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     _initializeCamera();
   }
 
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   Future<void> _initializeCamera() async {
     try {
       final cameras = await availableCameras();
       final firstCamera = cameras.first;
 
       final controller = CameraController(firstCamera, ResolutionPreset.high);
-      await controller.initialize();
+      final initFuture = controller.initialize();
 
       if (!mounted) return;
 
       setState(() {
         _controller = controller;
-        _initializeControllerFuture = Future.value();
+        _initializeControllerFuture = initFuture;
       });
     } catch (e, stack) {
       log('Error initializing camera: $e\n$stack');
@@ -42,14 +48,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _controller?.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_controller == null || !_controller!.value.isInitialized) {
+    if (_controller == null) {
       return const Center(child: CircularProgressIndicator());
     }
     return Scaffold(
