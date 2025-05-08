@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
+import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 
 import 'in_range_checker.dart';
 
@@ -74,7 +75,10 @@ class MapService extends ChangeNotifier {
         height: 40,
         child: Icon(
           Icons.location_pin,
-          color: element.hasCompleted ? Colors.green : Colors.black,
+          color:
+              element.locationStatus == LocationStatus.completed
+                  ? Colors.green
+                  : Colors.black,
           size: 30,
         ),
       );

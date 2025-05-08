@@ -177,7 +177,7 @@ class BingoCard {
         final element = bingoCard[x][y];
 
         if (element.latitude == latitude && element.longitude == longitude) {
-          element.hasCompleted = true;
+          element.locationStatus = LocationStatus.completed;
           debugPrint('has a bingo of any kind yes/no: ${hasBingo()}');
           BingoDao().insertCompleted(x, y);
           MapService().refreshMarkers();
@@ -196,15 +196,27 @@ class BingoCard {
       List<bool> yAxis = [false, false, false, false, false];
 
       for (int y = 0; y < 5; y++) {
-        xAxis[y] = bingoCard[x][y].hasCompleted;
-        yAxis[y] = bingoCard[y][x].hasCompleted;
+        xAxis[y] =
+            bingoCard[x][y].locationStatus == LocationStatus.completed
+                ? true
+                : false;
+        yAxis[y] =
+            bingoCard[y][x].locationStatus == LocationStatus.completed
+                ? true
+                : false;
       }
 
       if (!xAxis.contains(false)) return true;
       if (!yAxis.contains(false)) return true;
 
-      diagonalOne[x] = bingoCard[x][x].hasCompleted;
-      diagonalTwo[x] = bingoCard[x][4 - x].hasCompleted;
+      diagonalOne[x] =
+          bingoCard[x][x].locationStatus == LocationStatus.completed
+              ? true
+              : false;
+      diagonalTwo[x] =
+          bingoCard[x][4 - x].locationStatus == LocationStatus.completed
+              ? true
+              : false;
     }
 
     if (!diagonalOne.contains(false)) return true;

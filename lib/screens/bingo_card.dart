@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
+import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 
 class BingoCardScreen extends StatefulWidget {
   const BingoCardScreen({super.key});
@@ -35,7 +36,10 @@ class _BingoCardScreenState extends State<BingoCardScreen> {
                 return Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: element.hasCompleted ? Colors.green : Colors.white,
+                    color:
+                        element.locationStatus == LocationStatus.completed
+                            ? Colors.green
+                            : Colors.white,
                     border: Border.all(color: Colors.black, width: 1),
                   ),
                   child: Center(

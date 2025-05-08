@@ -30,6 +30,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       final controller = CameraController(firstCamera, ResolutionPreset.high);
       await controller.initialize();
 
+      if (!mounted) return;
+
       setState(() {
         _controller = controller;
         _initializeControllerFuture = Future.value();
@@ -41,8 +43,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   void dispose() {
-    _controller?.dispose();
     super.dispose();
+    _controller?.dispose();
   }
 
   @override
