@@ -200,13 +200,18 @@ class BingoCard {
 
           showDialog(
             context: navigatorKey.currentContext!,
+            barrierDismissible: false,
             builder:
-                (context) => QuestPopup(
-                  text: 'Test text!',
-                  buttonText: 'OK',
-                  onButtonPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                (context) => PopScope(
+                  canPop: false,
+                  child: QuestPopup(
+                    text: 'Test text!',
+                    buttonText: 'Foto nemen',
+                    onButtonPressed: () {
+                      Navigator.of(context).pop();
+                      navigationIndexNotifier.value = 2;
+                    },
+                  ),
                 ),
           );
 

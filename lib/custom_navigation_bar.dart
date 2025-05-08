@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:osm_bingo/navigation_service.dart';
 import 'package:osm_bingo/screens/bingo_card.dart';
-import 'package:osm_bingo/screens/map.dart';
 import 'package:osm_bingo/screens/cam.dart';
+import 'package:osm_bingo/screens/map.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   @visibleForTesting
@@ -20,6 +21,14 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
   void initState() {
     super.initState();
     currentPageIndex = widget.initialIndex;
+
+    navigationIndexNotifier.addListener(() {
+      if (mounted) {
+        setState(() {
+          currentPageIndex = navigationIndexNotifier.value;
+        });
+      }
+    });
   }
 
   @override
