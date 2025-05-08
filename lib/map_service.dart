@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -53,6 +55,7 @@ class MapService extends ChangeNotifier {
     final accuracy = position.accuracy;
     if (accuracy > 0.0) {
       calculatedRange = defaultRange + accuracy;
+      calculatedRange = clampDouble(calculatedRange, 50, 80);
     }
 
     currentPosition = newPosition;
