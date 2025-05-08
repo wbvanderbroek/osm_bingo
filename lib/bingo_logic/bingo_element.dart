@@ -1,11 +1,13 @@
 class BingoElement {
   String locName = "";
-  double longitude = 0;
+  String taskDescription = "";
   double latitude = 0;
+  double longitude = 0;
   bool hasCompleted = false;
 
-  BingoElement(String name, double lat, double long) {
+  BingoElement(String name, String description, double lat, double long) {
     locName = name;
+    taskDescription = description;
     longitude = long;
     latitude = lat;
   }
