@@ -24,6 +24,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     });
 
     _mapService.addListener(() {
+      if (!mounted) return;
       setState(() {});
     });
 
@@ -55,6 +56,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     _timer?.cancel();
     super.dispose();
     _mapService.removeListener(() {
+      if (!mounted) return;
       setState(() {});
     });
   }
