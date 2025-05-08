@@ -58,8 +58,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       var pic = await http.MultipartFile.fromPath('file', imageFile.path);
       request.files.add(pic);
-
-      request.fields['username'] = TeamDao.playerName;
+      request.fields['username'] = TeamDao.nameWithUuid;
 
       var response = await request.send();
 

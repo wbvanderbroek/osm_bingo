@@ -12,15 +12,13 @@ class TeamDao {
   static final TeamDao _instance = TeamDao._internal();
   factory TeamDao() => _instance;
   TeamDao._internal();
-  static String playerName = "";
+  static String nameWithUuid = "";
 
   final LocalDatabase _db = LocalDatabase();
   final _uuid = Uuid();
 
   Future<void> insertName(String name) async {
     await _db.init();
-    final uuid = _uuid.v4();
-    final nameWithUuid = '${name}_$uuid';
 
     await _db.database.rawInsert(
       'INSERT OR REPLACE INTO Name (name) VALUES (?)',
@@ -35,7 +33,7 @@ class TeamDao {
     if (query.isNotEmpty) {
       for (var name in query) {
         // Although of course should never be more than one
-        playerName = name['name'] as String;
+        nameWithUuid = name['name'] as String;
       }
       return;
     }
@@ -49,7 +47,7 @@ class TeamDao {
           return WillPopScope(
             onWillPop: () async => false,
             child: AlertDialog(
-              title: Text("Enter Your Name"),
+              title: Text("Bedenk een goede teamnaam"),
               content: TextField(
                 controller: nameController,
                 maxLength: 20,
@@ -57,18 +55,17 @@ class TeamDao {
                   FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
                   LengthLimitingTextInputFormatter(20),
                 ],
-                decoration: InputDecoration(
-                  hintText: "Bedenk een goede teamnaam",
-                  counterText: "",
-                ),
+                decoration: InputDecoration(counterText: ""),
               ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     String name = nameController.text.trim();
                     if (name.isNotEmpty) {
-                      insertName(name);
-                      playerName = name;
+                      final uuid = _uuid.v4();
+                      nameWithUuid = '${name}_$uuid';
+                      insertName(nameWithUuid);
+
                       Navigator.of(context).pop();
                     }
                   },
