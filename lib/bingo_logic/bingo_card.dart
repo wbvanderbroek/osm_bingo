@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:osm_bingo/dao/bingo.dart';
 import 'package:osm_bingo/map_service.dart';
 import 'package:osm_bingo/navigation_service.dart';
@@ -173,7 +176,38 @@ class BingoCard {
   static int score = 0;
 
   static List<BingoElement> get flattenedBingoElements =>
-      BingoCard.bingoCard.expand((row) => row).toList();
+      bingoCard.expand((row) => row).toList();
+
+  static Future<void> loadBingoCard() async {
+    final url = Uri.parse('http://bingo.waltervanderbroek.nl:5000/api/bingo');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+
+      List<BingoElement> bingoElements =
+          data.map((item) {
+            return BingoElement(
+              item['name'],
+              item['description'],
+              item['latitude'],
+              item['longitude'],
+            );
+          }).toList();
+
+      List<List<BingoElement>> tempBingoCard = [];
+      for (int i = 0; i < bingoElements.length; i += 5) {
+        int end = (i + 5 < bingoElements.length) ? i + 5 : bingoElements.length;
+        tempBingoCard.add(bingoElements.sublist(i, end));
+      }
+
+      bingoCard = tempBingoCard;
+
+      debugPrint("Bingo card loaded with ${bingoCard.length} rows.");
+    } else {
+      throw Exception('Failed to load bingo elements');
+    }
+  }
 
   static void markAsCompleted(
     double latitude,

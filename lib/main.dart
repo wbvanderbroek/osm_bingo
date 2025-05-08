@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:osm_bingo/bingo_logic/bingo_card.dart';
 import 'package:osm_bingo/custom_navigation_bar.dart';
 import 'package:osm_bingo/dao/bingo.dart';
 import 'package:osm_bingo/dao/local_database.dart';
+import 'package:osm_bingo/dao/team.dart';
 import 'package:osm_bingo/navigation_service.dart';
 
 Future<void> main() async {
@@ -10,7 +12,10 @@ Future<void> main() async {
 
   await BingoDao().getCompleted();
 
+  BingoCard.loadBingoCard();
+
   runApp(const MyApp());
+  await TeamDao().getName();
 }
 
 class MyApp extends StatelessWidget {
