@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:osm_bingo/bingo_logic/bingo_card.dart';
 import 'package:osm_bingo/custom_navigation_bar.dart';
 import 'package:osm_bingo/dao/bingo.dart';
 import 'package:osm_bingo/dao/local_database.dart';
@@ -9,7 +10,7 @@ Future<void> main() async {
   await LocalDatabase().init();
 
   await BingoDao().getCompleted();
-
+  BingoCard.loadBingoCard();
   runApp(const MyApp());
 }
 
