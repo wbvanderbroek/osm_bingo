@@ -27,14 +27,15 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       final cameras = await availableCameras();
       final firstCamera = cameras.first;
 
-      _controller = CameraController(firstCamera, ResolutionPreset.high);
+      final controller = CameraController(firstCamera, ResolutionPreset.high);
+      await controller.initialize();
 
-      _initializeControllerFuture = _controller!.initialize();
-
-      // Notify Flutter to rebuild when the controller is ready
-      setState(() {});
-    } catch (e) {
-      log('Error initializing camera: $e');
+      setState(() {
+        _controller = controller;
+        _initializeControllerFuture = Future.value();
+      });
+    } catch (e, stack) {
+      log('Error initializing camera: $e\n$stack');
     }
   }
 
@@ -46,6 +47,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_controller == null || !_controller!.value.isInitialized) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('Take a picture')),
       body:
