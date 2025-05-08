@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
+import 'package:http/http.dart' as http;
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({super.key});
@@ -47,6 +48,27 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     }
   }
 
+  Future<void> uploadImage(File imageFile) async {
+    try {
+      final uri = Uri.parse(
+        'http://bingo.waltervanderbroek.nl:5000/api/upload',
+      );
+      var request = http.MultipartRequest('POST', uri);
+
+      var pic = await http.MultipartFile.fromPath('file', imageFile.path);
+      request.files.add(pic);
+
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        log('Image uploaded successfully');
+      } else {
+        log('Failed to upload image');
+      }
+    } catch (e) {
+      log('Error uploading image: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_controller == null) {
@@ -74,6 +96,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             final image = await _controller!.takePicture();
             await Gal.putImage(image.path);
+
+            File imageFile = File(image.path);
+            await uploadImage(imageFile);
 
             if (!context.mounted) return;
 
