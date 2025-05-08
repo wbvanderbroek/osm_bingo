@@ -3,7 +3,8 @@ class BingoElement {
   String taskDescription = "";
   double latitude = 0;
   double longitude = 0;
-  bool hasCompleted = false;
+
+  LocationStatus locationStatus = LocationStatus.notSeen;
 
   BingoElement(String name, String description, double lat, double long) {
     locName = name;
@@ -12,3 +13,5 @@ class BingoElement {
     latitude = lat;
   }
 }
+
+enum LocationStatus { notSeen, hasBeenInRange, completed }
