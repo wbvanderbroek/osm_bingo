@@ -1,6 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:osm_bingo/dao/bingo.dart';
 import 'package:osm_bingo/map_service.dart';
+import 'package:osm_bingo/navigation_service.dart';
+import 'package:osm_bingo/quest_popup.dart';
 
 import 'bingo_element.dart';
 
@@ -181,6 +183,33 @@ class BingoCard {
           debugPrint('has a bingo of any kind yes/no: ${hasBingo()}');
           BingoDao().insertCompleted(x, y);
           MapService().refreshMarkers();
+          return;
+        }
+      }
+    }
+  }
+
+  static void markAsSeen(double latitude, double longitude) {
+    for (int x = 0; x < bingoCard.length; x++) {
+      for (int y = 0; y < bingoCard[x].length; y++) {
+        final element = bingoCard[x][y];
+
+        if (element.latitude == latitude && element.longitude == longitude) {
+          element.locationStatus = LocationStatus.hasBeenInRange;
+          MapService().refreshMarkers();
+
+          showDialog(
+            context: navigatorKey.currentContext!,
+            builder:
+                (context) => QuestPopup(
+                  text: 'Test text!',
+                  buttonText: 'OK',
+                  onButtonPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+          );
+
           return;
         }
       }

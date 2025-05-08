@@ -27,28 +27,6 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
       if (!mounted) return;
       setState(() {});
     });
-
-    // These lines can ben used to test bing checks or visualization
-    // BingoCard.markAsCompleted(
-    //   BingoCard.bingoCard[0][0].latitude,
-    //   BingoCard.bingoCard[0][0].longitude,
-    // );
-    // BingoCard.markAsCompleted(
-    //   BingoCard.bingoCard[0][1].latitude,
-    //   BingoCard.bingoCard[0][1].longitude,
-    // );
-    // BingoCard.markAsCompleted(
-    //   BingoCard.bingoCard[0][2].latitude,
-    //   BingoCard.bingoCard[0][2].longitude,
-    // );
-    // BingoCard.markAsCompleted(
-    //   BingoCard.bingoCard[0][3].latitude,
-    //   BingoCard.bingoCard[0][3].longitude,
-    // );
-    // BingoCard.markAsCompleted(
-    //   BingoCard.bingoCard[0][4].latitude,
-    //   BingoCard.bingoCard[0][4].longitude,
-    // );
   }
 
   @override

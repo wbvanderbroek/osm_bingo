@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:osm_bingo/custom_navigation_bar.dart';
 import 'package:osm_bingo/dao/bingo.dart';
 import 'package:osm_bingo/dao/local_database.dart';
+import 'package:osm_bingo/navigation_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      navigatorKey: navigatorKey,
       home: const CustomNavigationBar(),
     );
   }

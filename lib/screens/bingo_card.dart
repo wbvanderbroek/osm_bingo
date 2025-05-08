@@ -39,6 +39,9 @@ class _BingoCardScreenState extends State<BingoCardScreen> {
                     color:
                         element.locationStatus == LocationStatus.completed
                             ? Colors.green
+                            : element.locationStatus ==
+                                LocationStatus.hasBeenInRange
+                            ? Colors.orange
                             : Colors.white,
                     border: Border.all(color: Colors.black, width: 1),
                   ),
