@@ -11,6 +11,7 @@ class MapService {
   final MapController mapController = MapController();
   LatLng currentPosition = const LatLng(53.2194, 6.5665);
   final List<Marker> bingoMarkers = [];
+  static final range = 50;
 
   MapService._internal() {
     _populateMarkers();

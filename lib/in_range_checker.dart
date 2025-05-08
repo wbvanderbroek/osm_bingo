@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
+import 'package:osm_bingo/map_service.dart';
 import 'package:vibration/vibration.dart';
 
 class InRangeChecker {
@@ -14,7 +15,7 @@ class InRangeChecker {
         userLat,
         userLon,
       );
-      if (distanceInMeters <= 20) {
+      if (distanceInMeters <= MapService.range) {
         if (element.hasCompleted == false) {
           BingoCard.markAsCompleted(element.latitude, element.longitude);
           Vibration.vibrate();
