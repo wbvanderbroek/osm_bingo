@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:osm_bingo/dao/bingo.dart';
+import 'package:osm_bingo/dao/team.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -37,7 +38,10 @@ class LocalDatabase {
   }
 
   Future<void> createTables(Database db, int version, [int? newVersion]) async {
-    final allTableDeclarations = [...bingoTableDeclaration];
+    final allTableDeclarations = [
+      ...bingoTableDeclaration,
+      ...teamTableDeclaration,
+    ];
 
     for (var query in allTableDeclarations) {
       await db.execute(query);

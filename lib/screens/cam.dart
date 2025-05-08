@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
 import 'package:http/http.dart' as http;
+import 'package:osm_bingo/dao/team.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({super.key});
@@ -58,11 +59,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       var pic = await http.MultipartFile.fromPath('file', imageFile.path);
       request.files.add(pic);
 
+      request.fields['username'] = TeamDao.playerName;
+
       var response = await request.send();
+
       if (response.statusCode == 200) {
         log('Image uploaded successfully');
       } else {
-        log('Failed to upload image');
+        final responseBody = await response.stream.bytesToString();
+        log(
+          'Failed to upload image. Status: ${response.statusCode}, Body: $responseBody',
+        );
       }
     } catch (e) {
       log('Error uploading image: $e');
