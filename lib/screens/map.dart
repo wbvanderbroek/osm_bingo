@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:osm_bingo/bingo_marker.dart';
@@ -82,19 +84,36 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
           ),
           MarkerLayer(
             markers: [
+              // Marker for the current location
               Marker(
-                width: 40,
-                height: 40,
+                width: 50,
+                height: 50,
                 point: _mapService.currentPosition,
-                child: const Icon(
-                  Icons.person_pin_circle,
-                  color: Colors.red,
-                  size: 30,
+                child: StreamBuilder<CompassEvent>(
+                  stream: FlutterCompass.events,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError ||
+                        !snapshot.hasData ||
+                        snapshot.data!.heading == null) {
+                      return const SizedBox();
+                    }
+
+                    double? heading = snapshot.data!.heading!;
+                    // Rotate the marker based on the heading
+                    return Transform.rotate(
+                      angle: heading * (math.pi / 180), // Convert to radians
+                      child: const Icon(
+                        Icons.navigation,
+                        size: 40,
+                        color: Colors.red,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
           ),
-          Positioned(top: 16, right: 16, child: Compass()),
+
           MarkerLayer(
             markers:
                 _mapService.bingoMarkers.map((marker) {
