@@ -33,7 +33,7 @@ class BingoCard {
       ),
       BingoElement(
         "Groninger Museum",
-        "Maak een foto van het Groninger Museum waarin een of merderen leden van je groepje een kunst werk na doen, geef ook aan welk kunst werk je na doet het hoefd niet van dit museum te zijn.",
+        "Maak een foto van het Groninger Museum waarin een of meerdere leden van je groepje een kunstwerk na doen, geef ook aan welk kunstwerk je na doet. Het hoeft niet van dit museum te zijn.",
         53.21228190017462,
         6.566079351512879,
       ),
@@ -91,7 +91,7 @@ class BingoCard {
       ),
       BingoElement(
         "Pepergasthuis",
-        "Maak een foto van je groepje in het Pepergasthuis.",
+        "Maak een foto van je groepje in het Pepergasthuis als het open is, maak anders buiten een foto.",
         53.21742607496547,
         6.57141301267729,
       ),
@@ -149,13 +149,13 @@ class BingoCard {
       ),
       BingoElement(
         "Domino's Pizza Paterswoldseweg",
-        "Maak een foto van het domino’s bord.",
+        "Maak een foto van het Domino’s bord.",
         53.203118573549695,
         6.559126479689959,
       ),
       BingoElement(
         "'t Pannekoekschip",
-        "Maak een foto van ‘t Pannekoek-schip met iemand van je groepje.",
+        "Maak een foto van ‘t Pannekoekschip met iemand van je groepje.",
         53.21695900180443,
         6.579041728818073,
       ),
