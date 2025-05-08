@@ -170,6 +170,8 @@ class BingoCard {
     ],
   ];
 
+  static int score = 0;
+
   static List<BingoElement> get flattenedBingoElements =>
       BingoCard.bingoCard.expand((row) => row).toList();
 
@@ -179,45 +181,42 @@ class BingoCard {
         final element = bingoCard[x][y];
 
         if (element.latitude == latitude && element.longitude == longitude) {
-          element.locationStatus = LocationStatus.completed;
-          debugPrint('has a bingo of any kind yes/no: ${hasBingo()}');
-          BingoDao().insertCompleted(x, y);
-          MapService().refreshMarkers();
+          if (element.locationStatus != LocationStatus.completed) {
+            element.locationStatus = LocationStatus.completed;
+            score += 1;
+
+            if (_isRowCompleted(x)) score += 5;
+
+            if (_isColumnCompleted(y)) score += 5;
+
+            if (score > 75) score = 75;
+            debugPrint('Total Score: $score');
+
+            BingoDao().insertCompleted(x, y);
+            MapService().refreshMarkers();
+          }
           return;
         }
       }
     }
   }
 
-  static void markAsSeen(double latitude, double longitude) {
-    for (int x = 0; x < bingoCard.length; x++) {
-      for (int y = 0; y < bingoCard[x].length; y++) {
-        final element = bingoCard[x][y];
-
-        if (element.latitude == latitude && element.longitude == longitude) {
-          element.locationStatus = LocationStatus.hasBeenInRange;
-          MapService().refreshMarkers();
-
-          showDialog(
-            context: navigatorKey.currentContext!,
-            barrierDismissible: false,
-            builder:
-                (context) => PopScope(
-                  canPop: false,
-                  child: QuestPopup(
-                    text: element.taskDescription,
-                    onButtonPressed: () {
-                      Navigator.of(context).pop();
-                      navigationIndexNotifier.value = 2;
-                    },
-                  ),
-                ),
-          );
-
-          return;
-        }
+  static bool _isRowCompleted(int rowIndex) {
+    for (int i = 0; i < 5; i++) {
+      if (bingoCard[rowIndex][i].locationStatus != LocationStatus.completed) {
+        return false;
       }
     }
+    return true;
+  }
+
+  static bool _isColumnCompleted(int colIndex) {
+    for (int i = 0; i < 5; i++) {
+      if (bingoCard[i][colIndex].locationStatus != LocationStatus.completed) {
+        return false;
+      }
+    }
+    return true;
   }
 
   static bool hasBingo() {
@@ -256,5 +255,36 @@ class BingoCard {
     if (!diagonalTwo.contains(false)) return true;
 
     return false;
+  }
+
+  static void markAsSeen(double latitude, double longitude) {
+    for (int x = 0; x < bingoCard.length; x++) {
+      for (int y = 0; y < bingoCard[x].length; y++) {
+        final element = bingoCard[x][y];
+
+        if (element.latitude == latitude && element.longitude == longitude) {
+          element.locationStatus = LocationStatus.hasBeenInRange;
+          MapService().refreshMarkers();
+
+          showDialog(
+            context: navigatorKey.currentContext!,
+            barrierDismissible: false,
+            builder:
+                (context) => PopScope(
+                  canPop: false,
+                  child: QuestPopup(
+                    text: element.taskDescription,
+                    onButtonPressed: () {
+                      Navigator.of(context).pop();
+                      navigationIndexNotifier.value = 2;
+                    },
+                  ),
+                ),
+          );
+
+          return;
+        }
+      }
+    }
   }
 }

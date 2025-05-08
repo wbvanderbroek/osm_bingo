@@ -82,6 +82,13 @@ class MapService extends ChangeNotifier {
       //   BingoCard.bingoCard[0][4].latitude,
       //   BingoCard.bingoCard[0][4].longitude,
       // );
+
+      // for (final marker in bingoMarkers) {
+      //   BingoCard.markAsCompleted(
+      //     marker.element.latitude,
+      //     marker.element.longitude,
+      //   );
+      // }
     }
     notifyListeners();
 
