@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:osm_bingo/bingo_marker.dart';
 import 'package:osm_bingo/in_range_checker.dart';
 import 'package:osm_bingo/map_service.dart';
@@ -18,7 +17,6 @@ class OpenStreetMapScreen extends StatefulWidget {
 class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   Timer? _timer;
   final MapService _mapService = MapService();
-  final PopupController _popupController = PopupController();
 
   @override
   void initState() {
