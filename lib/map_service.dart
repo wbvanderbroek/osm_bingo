@@ -3,7 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
-import 'package:osm_bingo/bingo_logic/bingo_element.dart';
+import 'package:osm_bingo/bingo_marker.dart';
 
 import 'in_range_checker.dart';
 
@@ -14,7 +14,7 @@ class MapService extends ChangeNotifier {
 
   final MapController mapController = MapController();
   LatLng currentPosition = const LatLng(53.2194, 6.5665);
-  final List<Marker> bingoMarkers = [];
+  final List<BingoMarker> bingoMarkers = [];
   static final defaultRange = 50;
   double calculatedRange = defaultRange.toDouble();
   static bool isFirstTime = true;
@@ -60,6 +60,28 @@ class MapService extends ChangeNotifier {
     if (isFirstTime) {
       isFirstTime = false;
       mapController.move(newPosition, mapController.camera.zoom);
+
+      // These lines can ben used to test bing checks or visualization
+      // BingoCard.markAsSeen(
+      //   BingoCard.bingoCard[0][0].latitude,
+      //   BingoCard.bingoCard[0][0].longitude,
+      // );
+      // BingoCard.markAsCompleted(
+      //   BingoCard.bingoCard[0][1].latitude,
+      //   BingoCard.bingoCard[0][1].longitude,
+      // );
+      // BingoCard.markAsCompleted(
+      //   BingoCard.bingoCard[0][2].latitude,
+      //   BingoCard.bingoCard[0][2].longitude,
+      // );
+      // BingoCard.markAsCompleted(
+      //   BingoCard.bingoCard[0][3].latitude,
+      //   BingoCard.bingoCard[0][3].longitude,
+      // );
+      // BingoCard.markAsCompleted(
+      //   BingoCard.bingoCard[0][4].latitude,
+      //   BingoCard.bingoCard[0][4].longitude,
+      // );
     }
     notifyListeners();
 
@@ -69,20 +91,7 @@ class MapService extends ChangeNotifier {
   void _populateMarkers() {
     bingoMarkers.clear();
     for (var element in BingoCard.flattenedBingoElements) {
-      final marker = Marker(
-        point: LatLng(element.latitude, element.longitude),
-        width: 40,
-        height: 40,
-        child: Icon(
-          Icons.location_pin,
-          color:
-              element.locationStatus == LocationStatus.completed
-                  ? Colors.green
-                  : Colors.black,
-          size: 30,
-        ),
-      );
-      bingoMarkers.add(marker);
+      bingoMarkers.add(BingoMarker(element: element));
     }
   }
 

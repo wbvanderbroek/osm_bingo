@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:osm_bingo/navigation_service.dart';
 import 'package:osm_bingo/screens/bingo_card.dart';
-import 'package:osm_bingo/screens/map.dart';
 import 'package:osm_bingo/screens/cam.dart';
+import 'package:osm_bingo/screens/map.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   @visibleForTesting
@@ -14,12 +15,15 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBar extends State<CustomNavigationBar> {
-  int currentPageIndex = 0;
-
   @override
   void initState() {
     super.initState();
-    currentPageIndex = widget.initialIndex;
+
+    navigationIndexNotifier.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -33,12 +37,12 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             NavigationBar(
               onDestinationSelected: (int index) {
                 setState(() {
-                  currentPageIndex = index;
+                  navigationIndexNotifier.value = index;
                 });
               },
               indicatorColor: Colors.amber,
               backgroundColor: Colors.white70,
-              selectedIndex: currentPageIndex,
+              selectedIndex: navigationIndexNotifier.value,
               destinations: const <Widget>[
                 NavigationDestination(icon: Icon(Icons.map), label: 'Map'),
                 NavigationDestination(
@@ -59,7 +63,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             const OpenStreetMapScreen(),
             const BingoCardScreen(),
             const TakePictureScreen(),
-          ][currentPageIndex],
+          ][navigationIndexNotifier.value],
     );
   }
 }
