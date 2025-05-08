@@ -20,7 +20,20 @@ class _BingoCardScreenState extends State<BingoCardScreen> {
     const title = 'Bingo Kaart';
 
     return Scaffold(
-      appBar: AppBar(title: const Text(title)),
+      appBar: AppBar(
+        title: const Text(title),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Text(
+                'Score: ${BingoCard.score}',
+                style: const TextStyle(fontSize: 18),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Center(
         child: AspectRatio(
           aspectRatio: 1,

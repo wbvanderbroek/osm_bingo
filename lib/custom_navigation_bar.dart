@@ -51,7 +51,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.camera),
-                  label: 'camera',
+                  label: 'Camera',
                 ),
               ],
             ),
