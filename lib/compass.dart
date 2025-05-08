@@ -1,5 +1,6 @@
 // compass.dart
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -44,7 +45,7 @@ class _CompassState extends State<Compass> {
 
         double? direction = snapshot.data!.heading!;
         return Transform.rotate(
-          angle: -direction * (math.pi / 180),
+          angle: direction * (math.pi / 180),
           child: Container(
             width: 50,
             height: 50,
