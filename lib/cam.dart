@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gal/gal.dart';
+import 'package:image_picker/image_picker.dart';
 
 Future<void> openCamera() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -94,6 +98,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and get the file `image`
             // where it was saved.
             final image = await _controller.takePicture();
+            await Gal.putImage(image.path);
 
             if (!context.mounted) return;
 
