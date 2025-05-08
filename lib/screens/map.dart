@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:osm_bingo/compass.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:osm_bingo/map_service.dart';
@@ -108,6 +108,8 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
               ),
             ],
           ),
+          // Compass Widget
+          Positioned(top: 16, right: 16, child: Compass()),
         ],
       ),
     );
