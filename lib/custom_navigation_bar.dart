@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:osm_bingo/screens/bingo_card.dart';
 import 'package:osm_bingo/screens/map.dart';
+import 'package:osm_bingo/screens/cam.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   @visibleForTesting
@@ -44,6 +45,10 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
                   icon: Icon(Icons.grid_view),
                   label: 'Bingo Kaart',
                 ),
+                NavigationDestination(
+                  icon: Icon(Icons.camera),
+                  label: 'camera',
+                ),
               ],
             ),
           ],
@@ -53,6 +58,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
           <Widget>[
             const OpenStreetMapScreen(),
             const BingoCardScreen(),
+            const TakePictureScreen(),
           ][currentPageIndex],
     );
   }
