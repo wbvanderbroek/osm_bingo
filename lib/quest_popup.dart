@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 class QuestPopup extends StatelessWidget {
   final String text;
-  final String buttonText;
   final VoidCallback onButtonPressed;
 
   const QuestPopup({
     super.key,
     required this.text,
-    required this.buttonText,
     required this.onButtonPressed,
   });
 
@@ -29,7 +27,7 @@ class QuestPopup extends StatelessWidget {
         ],
       ),
       actions: [
-        TextButton(onPressed: onButtonPressed, child: Text(buttonText)),
+        TextButton(onPressed: onButtonPressed, child: Text("Maak een foto!")),
       ],
     );
   }

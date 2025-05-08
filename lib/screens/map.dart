@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+import 'package:osm_bingo/bingo_marker.dart';
+import 'package:osm_bingo/in_range_checker.dart';
 import 'package:osm_bingo/map_service.dart';
+import 'package:osm_bingo/quest_popup.dart';
 
 class OpenStreetMapScreen extends StatefulWidget {
   const OpenStreetMapScreen({super.key});
@@ -14,6 +18,7 @@ class OpenStreetMapScreen extends StatefulWidget {
 class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   Timer? _timer;
   final MapService _mapService = MapService();
+  final PopupController _popupController = PopupController();
 
   @override
   void initState() {
@@ -72,19 +77,66 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
             ],
           ),
           MarkerLayer(
-            markers: [
-              ..._mapService.bingoMarkers,
-              Marker(
-                point: _mapService.currentPosition,
-                width: 40,
-                height: 40,
-                child: const Icon(
-                  Icons.accessibility_new_outlined,
-                  color: Colors.red,
-                  size: 45,
-                ),
-              ),
-            ],
+            markers:
+                _mapService.bingoMarkers.map((marker) {
+                  return Marker(
+                    width: marker.width,
+                    height: marker.height,
+                    point: marker.point,
+                    child: GestureDetector(
+                      onTap: () {
+                        final bingoMarker = marker as BingoMarker;
+                        final element = bingoMarker.element;
+                        final userLat = _mapService.currentPosition.latitude;
+                        final userLon = _mapService.currentPosition.longitude;
+
+                        final distance = calculateDistance(
+                          element.latitude,
+                          element.longitude,
+                          userLat,
+                          userLon,
+                        );
+
+                        if (distance <= _mapService.calculatedRange) {
+                          // Nearby: show QuestPopup
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return QuestPopup(
+                                text: element.locName,
+                                onButtonPressed:
+                                    () => Navigator.of(context).pop(),
+                              );
+                            },
+                          );
+                        } else {
+                          // Far away: show full dialog
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(element.locName),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [Text(element.taskDescription)],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.of(context).pop(),
+                                    child: const Text('Sluiten'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: marker.child,
+                    ),
+                  );
+                }).toList(),
           ),
         ],
       ),
