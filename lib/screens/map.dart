@@ -62,7 +62,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      print('Location services are disabled.');
+      debugPrint('Location services are disabled.');
       return;
     }
 
@@ -70,13 +70,13 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
+        debugPrint('Location permissions are denied');
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      print('Location permissions are permanently denied.');
+      debugPrint('Location permissions are permanently denied.');
       return;
     }
 
@@ -118,6 +118,18 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
           TileLayer(
             urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             userAgentPackageName: 'com.example',
+          ),
+          CircleLayer(
+            circles: [
+              CircleMarker(
+                point: _mapService.currentPosition,
+                color: Colors.blue.withAlpha(20),
+                borderStrokeWidth: 2,
+                useRadiusInMeter: true,
+                radius: MapService.range.toDouble(), // in meters
+                borderColor: Colors.blue,
+              ),
+            ],
           ),
           MarkerLayer(
             markers: [
