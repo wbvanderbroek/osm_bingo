@@ -175,13 +175,18 @@ class BingoCard {
   static List<BingoElement> get flattenedBingoElements =>
       BingoCard.bingoCard.expand((row) => row).toList();
 
-  static void markAsCompleted(double latitude, double longitude) {
+  static void markAsCompleted(
+    double latitude,
+    double longitude, {
+    bool fromDataBase = false,
+  }) {
     for (int x = 0; x < bingoCard.length; x++) {
       for (int y = 0; y < bingoCard[x].length; y++) {
         final element = bingoCard[x][y];
 
         if (element.latitude == latitude && element.longitude == longitude) {
-          if (element.locationStatus != LocationStatus.completed) {
+          if (element.locationStatus != LocationStatus.completed ||
+              fromDataBase) {
             element.locationStatus = LocationStatus.completed;
             score += 1;
 
