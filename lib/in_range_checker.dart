@@ -6,7 +6,7 @@ import 'package:osm_bingo/map_service.dart';
 import 'package:vibration/vibration.dart';
 
 class InRangeChecker {
-  void checkLocation(final userLat, final userLon) {
+  void checkLocation(final userLat, final userLon, {bool fromCamera = false}) {
     for (var element in BingoCard.flattenedBingoElements) {
       double distanceInMeters = calculateDistance(
         element.latitude,
@@ -18,6 +18,9 @@ class InRangeChecker {
         if (element.locationStatus == LocationStatus.notSeen) {
           BingoCard.markAsSeen(element.latitude, element.longitude);
           Vibration.vibrate();
+        } else if (fromCamera &&
+            element.locationStatus == LocationStatus.hasBeenInRange) {
+          BingoCard.markAsCompleted(element.latitude, element.longitude);
         }
       }
     }
