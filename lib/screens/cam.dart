@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:osm_bingo/dao/team.dart';
+import 'package:osm_bingo/in_range_checker.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({super.key});
@@ -107,7 +109,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             await uploadImage(imageFile);
 
             if (!context.mounted) return;
+            final Position position = await Geolocator.getCurrentPosition();
 
+            InRangeChecker().checkLocation(
+              position.latitude,
+              position.longitude,
+              fromCamera: true,
+            );
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder:
