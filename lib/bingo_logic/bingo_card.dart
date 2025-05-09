@@ -180,32 +180,37 @@ class BingoCard {
 
   static Future<void> loadBingoCard() async {
     final url = Uri.parse('http://bingo.waltervanderbroek.nl:5000/api/bingo');
-    final response = await http.get(url);
+    try {
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
 
-      List<BingoElement> bingoElements =
-          data.map((item) {
-            return BingoElement(
-              item['name'],
-              item['description'],
-              item['latitude'],
-              item['longitude'],
-            );
-          }).toList();
+        List<BingoElement> bingoElements =
+            data.map((item) {
+              return BingoElement(
+                item['name'],
+                item['description'],
+                item['latitude'],
+                item['longitude'],
+              );
+            }).toList();
 
-      List<List<BingoElement>> tempBingoCard = [];
-      for (int i = 0; i < bingoElements.length; i += 5) {
-        int end = (i + 5 < bingoElements.length) ? i + 5 : bingoElements.length;
-        tempBingoCard.add(bingoElements.sublist(i, end));
+        List<List<BingoElement>> tempBingoCard = [];
+        for (int i = 0; i < bingoElements.length; i += 5) {
+          int end =
+              (i + 5 < bingoElements.length) ? i + 5 : bingoElements.length;
+          tempBingoCard.add(bingoElements.sublist(i, end));
+        }
+
+        bingoCard = tempBingoCard;
+
+        debugPrint("Bingo card loaded with ${bingoCard.length} rows.");
+      } else {
+        throw Exception('Failed to load bingo elements');
       }
-
-      bingoCard = tempBingoCard;
-
-      debugPrint("Bingo card loaded with ${bingoCard.length} rows.");
-    } else {
-      throw Exception('Failed to load bingo elements');
+    } catch (e) {
+      debugPrint('Error loading bingo card: $e');
     }
   }
 
