@@ -10,9 +10,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalDatabase().init();
 
+  await BingoCard.loadBingoCard();
   await BingoDao().getCompleted();
-
-  BingoCard.loadBingoCard();
 
   runApp(const MyApp());
   await TeamDao().getName();
