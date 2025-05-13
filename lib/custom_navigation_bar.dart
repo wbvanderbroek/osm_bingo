@@ -27,6 +27,17 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+
+    navigationIndexNotifier.removeListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Material(
