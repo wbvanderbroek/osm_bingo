@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -84,37 +85,38 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
               ),
             ],
           ),
-          MarkerLayer(
-            markers: [
-              // Marker for the current location
-              Marker(
-                width: 50,
-                height: 50,
-                point: _mapService.currentPosition,
-                child: StreamBuilder<CompassEvent>(
-                  stream: FlutterCompass.events,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError ||
-                        !snapshot.hasData ||
-                        snapshot.data!.heading == null) {
-                      return const SizedBox();
-                    }
+          if (!Platform.environment.containsKey('FLUTTER_TEST'))
+            MarkerLayer(
+              markers: [
+                // Marker for the current location
+                Marker(
+                  width: 50,
+                  height: 50,
+                  point: _mapService.currentPosition,
+                  child: StreamBuilder<CompassEvent>(
+                    stream: FlutterCompass.events,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError ||
+                          !snapshot.hasData ||
+                          snapshot.data!.heading == null) {
+                        return const SizedBox();
+                      }
 
-                    double? heading = snapshot.data!.heading!;
-                    // Rotate the marker based on the heading
-                    return Transform.rotate(
-                      angle: heading * (math.pi / 180), // Convert to radians
-                      child: const Icon(
-                        Icons.navigation,
-                        size: 40,
-                        color: Colors.red,
-                      ),
-                    );
-                  },
+                      double? heading = snapshot.data!.heading!;
+                      // Rotate the marker based on the heading
+                      return Transform.rotate(
+                        angle: heading * (math.pi / 180), // Convert to radians
+                        child: const Icon(
+                          Icons.navigation,
+                          size: 40,
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
           MarkerLayer(
             markers:

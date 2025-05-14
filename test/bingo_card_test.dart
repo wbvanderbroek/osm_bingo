@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
-import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 import 'package:osm_bingo/screens/bingo_card.dart';
 
 void main() {
