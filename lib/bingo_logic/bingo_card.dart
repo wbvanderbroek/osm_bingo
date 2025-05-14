@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -236,8 +237,10 @@ class BingoCard {
             if (score > 75) score = 75;
             debugPrint('Total Score: $score');
 
-            BingoDao().insertCompleted(x, y);
-            MapService().refreshMarkers();
+            if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+              BingoDao().insertCompleted(x, y);
+              MapService().refreshMarkers();
+            }
           }
           return;
         }

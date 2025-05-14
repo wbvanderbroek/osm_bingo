@@ -24,9 +24,13 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   @override
   void initState() {
     super.initState();
-    _mapService.determinePosition();
+
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
-      _mapService.determinePosition();
+      try {
+        _mapService.determinePosition();
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     });
 
     _mapService.addListener(() {
