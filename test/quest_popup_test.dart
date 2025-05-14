@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:osm_bingo/bingo_logic/bingo_card.dart';
+import 'package:osm_bingo/in_range_checker.dart';
 import 'package:osm_bingo/map_service.dart';
 import 'package:osm_bingo/navigation_service.dart';
 import 'package:osm_bingo/screens/map.dart';
@@ -24,10 +25,11 @@ void main() {
         home: const OpenStreetMapScreen(),
       ),
     );
-    BingoCard.markAsSeen(
+    InRangeChecker().checkLocation(
       BingoCard.flattenedBingoElements[0].latitude,
       BingoCard.flattenedBingoElements[0].longitude,
     );
+
     await tester.loadFonts();
     await tester.pumpAndSettle();
     tester.useFuzzyComparator(allowedDiffPercent: 0.005);
