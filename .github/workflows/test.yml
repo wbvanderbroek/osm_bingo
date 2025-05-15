@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Flutter tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install apt dependencies
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: clang cmake git ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev ghostscript g++ xorg-dev libgles2-mesa-dev libdbus-1-dev libhdf5-dev sqlite3 libsqlite3-dev
+          version: 1.0
+          execute_install_scripts: true
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+          cache-key: 'flutter-:os:-:channel:-:version:-:arch:'
+
+      - name: Disable Flutter CLI animations
+        run: flutter config --no-cli-animations
+
+      - run: flutter pub get
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Check lints
+        uses: invertase/github-action-dart-analyzer@v3
+
+      - name: Check formatting
+        run: |
+          echo "If this fails, run 'dart format .' or set your editor to auto-format."
+          dart format . --output none --set-exit-if-changed
