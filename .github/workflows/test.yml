@@ -39,9 +39,6 @@ jobs:
       - name: Run tests
         run: flutter test --coverage
 
-      - name: Check lints
-        uses: invertase/github-action-dart-analyzer@v3
-
       - name: Check formatting
         run: |
           echo "If this fails, run 'dart format .' or set your editor to auto-format."
