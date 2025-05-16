@@ -1,11 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:osm_bingo/bingo_marker.dart';
-import 'package:osm_bingo/compass.dart';
 import 'package:osm_bingo/in_range_checker.dart';
 import 'package:osm_bingo/map_service.dart';
 import 'package:osm_bingo/quest_popup.dart';
@@ -24,9 +23,13 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   @override
   void initState() {
     super.initState();
-    _mapService.determinePosition();
+
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
-      _mapService.determinePosition();
+      try {
+        _mapService.determinePosition();
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     });
 
     _mapService.addListener(() {
@@ -80,37 +83,38 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
               ),
             ],
           ),
-          MarkerLayer(
-            markers: [
-              // Marker for the current location
-              Marker(
-                width: 50,
-                height: 50,
-                point: _mapService.currentPosition,
-                child: StreamBuilder<CompassEvent>(
-                  stream: FlutterCompass.events,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError ||
-                        !snapshot.hasData ||
-                        snapshot.data!.heading == null) {
-                      return const SizedBox();
-                    }
+          if (!Platform.environment.containsKey('FLUTTER_TEST'))
+            MarkerLayer(
+              markers: [
+                // Marker for the current location
+                Marker(
+                  width: 50,
+                  height: 50,
+                  point: _mapService.currentPosition,
+                  child: StreamBuilder<CompassEvent>(
+                    stream: FlutterCompass.events,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError ||
+                          !snapshot.hasData ||
+                          snapshot.data!.heading == null) {
+                        return const SizedBox();
+                      }
 
-                    double? heading = snapshot.data!.heading!;
-                    // Rotate the marker based on the heading
-                    return Transform.rotate(
-                      angle: heading * (math.pi / 180), // Convert to radians
-                      child: const Icon(
-                        Icons.navigation,
-                        size: 40,
-                        color: Colors.red,
-                      ),
-                    );
-                  },
+                      double? heading = snapshot.data!.heading!;
+                      // Rotate the marker based on the heading
+                      return Transform.rotate(
+                        angle: heading * (math.pi / 180), // Convert to radians
+                        child: const Icon(
+                          Icons.navigation,
+                          size: 40,
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
           MarkerLayer(
             markers:
@@ -121,7 +125,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
                     point: marker.point,
                     child: GestureDetector(
                       onTap: () {
-                        final bingoMarker = marker as BingoMarker;
+                        final bingoMarker = marker;
                         final element = bingoMarker.element;
                         final userLat = _mapService.currentPosition.latitude;
                         final userLon = _mapService.currentPosition.longitude;
