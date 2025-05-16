@@ -12,6 +12,8 @@ class TeamDao {
   static final TeamDao _instance = TeamDao._internal();
   factory TeamDao() => _instance;
   TeamDao._internal();
+
+  // This name is used to save the photos on the server
   static String nameWithUuid = "";
 
   final LocalDatabase _db = LocalDatabase();
@@ -26,6 +28,9 @@ class TeamDao {
     );
   }
 
+  /// This makes sure to either retrieve the name saved on the device, or
+  /// prompt the user to enter a name and then save that afterwards.
+
   Future<void> getName() async {
     await _db.init();
 
@@ -38,6 +43,7 @@ class TeamDao {
       return;
     }
 
+    // When no name is found on the device, we prompt the user to enter a name
     if (query.isEmpty) {
       showDialog(
         context: navigatorKey.currentContext!,

@@ -6,6 +6,7 @@ import 'package:osm_bingo/bingo_logic/bingo_element.dart';
 class BingoMarker extends Marker {
   final BingoElement element;
 
+  // Was intended to be a more custom marker but for now its basically just a normal marker
   BingoMarker({required this.element})
     : super(
         point: LatLng(element.latitude, element.longitude),

@@ -37,6 +37,7 @@ class LocalDatabase {
     _database = await openDatabase(dbPath, version: 1, onCreate: createTables);
   }
 
+  /// Make sure all tables exist so we can use them
   Future<void> createTables(Database db, int version, [int? newVersion]) async {
     final allTableDeclarations = [
       ...bingoTableDeclaration,

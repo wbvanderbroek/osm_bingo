@@ -25,6 +25,7 @@ class MapService extends ChangeNotifier {
     _populateMarkers();
   }
 
+  // Get the gps location and update the map and do a radius check
   Future<void> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -91,6 +92,7 @@ class MapService extends ChangeNotifier {
     InRangeChecker().checkLocation(position.latitude, position.longitude);
   }
 
+  // Add all markers to be used in the map
   void _populateMarkers() {
     bingoMarkers.clear();
     for (var element in BingoCard.flattenedBingoElements) {

@@ -215,6 +215,8 @@ class BingoCard {
     }
   }
 
+  /// This function is used to mark a location as completed, update the score and
+  /// insert the completed location into the database.
   static void markAsCompleted(
     double latitude,
     double longitude, {
@@ -304,6 +306,8 @@ class BingoCard {
     return false;
   }
 
+  /// This function is used to mark a location as seen,
+  /// and prompt the user to complete the task.
   static void markAsSeen(double latitude, double longitude) {
     for (int x = 0; x < bingoCard.length; x++) {
       for (int y = 0; y < bingoCard[x].length; y++) {
