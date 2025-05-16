@@ -12,6 +12,7 @@ class BingoDao {
 
   final LocalDatabase _db = LocalDatabase();
 
+  /// Inserts a completed location into the database.
   Future<void> insertCompleted(int gridLocationX, int gridLocationY) async {
     await _db.init();
     await _db.database.rawQuery(
@@ -20,6 +21,7 @@ class BingoDao {
     );
   }
 
+  /// Gets completed locations from the database and loads it into the bingo card.
   Future<void> getCompleted() async {
     await _db.init();
 

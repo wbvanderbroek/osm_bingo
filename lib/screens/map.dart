@@ -24,6 +24,7 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
   void initState() {
     super.initState();
 
+    // Super simple timer that makes sure the location is updated every 5 seconds
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
       try {
         _mapService.determinePosition();

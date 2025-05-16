@@ -19,6 +19,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
   void initState() {
     super.initState();
 
+    // Update the widget when the navigation index changes
     navigationIndexNotifier.addListener(() {
       if (mounted) {
         setState(() {});
@@ -54,6 +55,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
               indicatorColor: Colors.amber,
               backgroundColor: Colors.white70,
               selectedIndex: navigationIndexNotifier.value,
+              // Assign the classes to the destinations
               destinations: const <Widget>[
                 NavigationDestination(icon: Icon(Icons.map), label: 'Map'),
                 NavigationDestination(
@@ -70,6 +72,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
         ),
       ),
       body:
+          // This is where the screens are displayed
           <Widget>[
             const OpenStreetMapScreen(),
             const BingoCardScreen(),

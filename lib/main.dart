@@ -7,6 +7,7 @@ import 'package:osm_bingo/dao/team.dart';
 import 'package:osm_bingo/navigation_service.dart';
 
 Future<void> main() async {
+  // Load all data from database and
   WidgetsFlutterBinding.ensureInitialized();
   await LocalDatabase().init();
 
@@ -14,6 +15,7 @@ Future<void> main() async {
   await BingoDao().getCompleted();
 
   runApp(const MyApp());
+  // Try to load team name, if no team name exists this will prompt the user to create one
   await TeamDao().getName();
 }
 
